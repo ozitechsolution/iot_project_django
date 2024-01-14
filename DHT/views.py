@@ -103,4 +103,3 @@ def chart_data_mois(request):
         'humidity': [Hum.hum for Hum in dht]
     }
     return JsonResponse(data)
-
