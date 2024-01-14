@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'DHT',
     'rest_framework',
-
+    'twilio',
 ]
 
 MIDDLEWARE = [
