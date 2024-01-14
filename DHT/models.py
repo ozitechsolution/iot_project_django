@@ -8,8 +8,8 @@ class Dht11(models.Model):
 
     def send_warning_email(self):
         if self.temp is not None and self.temp > 36.0:
-            subject = 'Temperature Warning'
-            message = f'The temperature is above 36 degrees: {self.temp}°C'
+            subject = 'IOT, Avertissement de température'
+            message = f'Attention!! La température est supérieure à 36 degrés : {self.temp}°C'
             from_email = 'ozitech.solution@gmail.com'
             recipient_list = ['oussamainfo54@gmail.com']
 
