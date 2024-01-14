@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block i %}
+
+{% load static %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="show-row">
+    <form method="post" id="my-form">
+        {% csrf_token %}
+        {{form}}
+    </form>
+</div>
+<p>
+    <button class="btn btn-info" id='csv'>Télécharger csv</button>
+</p>
+<br/>
+<h5>
+    <a href="{% url 'myChart' %}">DHT 11</a>, Dérniere Mise a jour : <strong>{{ valeurs.date }}</strong>
+</h5>
+<br/>
+<div class="row">
+    <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+            <div class="card-header p-3 pt-2">
+                <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                    <i class="fa fa-thermometer-full"></i>
+                </div>
+                <div class="text-end pt-1">
+                    <p class="text-sm mb-0 text-capitalize">Températeur</p>
+                    <h4 class="mb-0">{{ valeurs.temp }} °C</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-5 col-sm-6 mb-xl-0 mb-4">
+        <div class="card">
+            <div class="card-header p-3 pt-2">
+                <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                    <i class="fa fa-cloud"></i>
+                </div>
+                <div class="text-end pt-1">
+                    <p class="text-sm mb-0 text-capitalize">Humidité : </p>
+                    <h4 class="mb-0">{{ valeurs.hum }} %</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var selectEl = $('#mon_select');
+
+    selectEl.change(function () {
+        $('#my-form').submit();
+    });
+
+    var downloadButton = document.getElementById('csv');
+    downloadButton.addEventListener('click', function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/download_csv/', true);
+        xhr.responseType = 'blob';
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var url = window.URL.createObjectURL(xhr.response);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'model_values.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        };
+        xhr.send();
+    });
+
+
+</script>
+{% endblock i %}
+
+<!--
+        <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2 ">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 ">Website Views</h6>
+                        <p class="text-sm ">Last Campaign Performance</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                <div class="card z-index-2  ">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 "> Daily Sales </h6>
+                        <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales.
+                        </p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm"> updated 4 min ago </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-4 mb-3">
+                <div class="card z-index-2 ">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                        <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                            <div class="chart">
+                                <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-0 ">Completed Tasks</h6>
+                        <p class="text-sm ">Last Campaign Performance</p>
+                        <hr class="dark horizontal">
+                        <div class="d-flex ">
+                            <i class="material-icons text-sm my-auto me-1">schedule</i>
+                            <p class="mb-0 text-sm">just updated</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+-->

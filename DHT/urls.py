@@ -15,9 +15,4 @@ urlpatterns = [
     path('chart-data-jour/',views.chart_data_jour,name='chart-data-jour'),
     path('chart-data-semaine/',views.chart_data_semaine,name='chart-data-semaine'),
     path('chart-data-mois/',views.chart_data_mois,name='chart-data-mois'),
-
-
-
-
-
 ]
