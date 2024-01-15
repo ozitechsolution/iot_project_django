@@ -11,6 +11,9 @@ SECRET_KEY = 'django-insecure-#yw-&*(o3sh=1%9kl!@rq9^5d+04@z(w1r6mw3)6aiyxck3vk*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 ALLOWED_HOSTS = ['*']
 
@@ -27,6 +30,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'twilio',
 ]
+
+LOGIN_REDIRECT_URL = '/index'  # Redirect to home page after login
+LOGOUT_REDIRECT_URL = '/login'  # Redirect to home page after logout
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
